@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="mainBase::layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title>Home</title>
+<style>
+.categories img {
+	padding-left: 6em;
+	padding-right: 6em;
+}
+
+.input {
+	border: none;
+	background: transparent;
+	outline: none;
+}
+</style>
+
+</head>
+<body>
+	<section class="cat">
+	
+		<input type="text" name="firstName" th:value="${session.fullName}" readonly style="font-size:20px;background:#e2e2e2 !important;font-weight:bold">
+		<div class="my-card">
+			<h1 class="heading">Northwest Missouri State University Blogs</h1>
+			<p class="content">MARYVILLE, MO, US</p>
+			<p class="content">The ScribblePad is a blogging website for the
+				Northwest community. Anyone with an email address at nwmissouri.edu
+				can start writing.</p>
+			<div class="grid">
+				<a class="c1" th:href="@{\library\0}">
+					<div id="library"class="categ-col">
+						<img src="/img/library.jpg" type="button">
+						<h3>Library</h3>
+					</div> 
+				</a>
+				<!-- 	<a th:href="\library"> <img src="/img/library.jpg"></a> -->
+				<a class="c1" th:href="@{\sports\0}">
+					<div id="sports" class="categ-col">
+						<img src="/img/sports.jpeg" type="button">
+						<h3>Sports</h3>
+					</div>
+				</a>
+				<a class="c1" th:href="@{\cultural\0}">
+					<div id="culture" class="categ-col">
+						<img src="/img/cul.jpeg" type="button">
+						<h3>Culture</h3>
+					</div>
+				</a>
+				<a class="c1" th:href="@{\misc\0}">
+					<div id="miscellaneous" class="categ-col">
+						<img src="/img/miss.jpg" type="button">
+						<h3>Miscellaneous</h3>
+					</div>
+				</a>
+			</div>
+		</div>
+	</section>
+	<script>
+		var firstName = "${session.firstName}"
+		document.getElementById("firstName").innerHTML = firstName
+	</script>
+</body>
+</html>

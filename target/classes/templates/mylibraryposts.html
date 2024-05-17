@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>My Posts</title>
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/catStyle.css}">
+</head>
+
+<body>
+<form action="/mylibraryposts/0" method="get"> <!-- Replace with your actual endpoint -->
+        <label for="year">Select Year:</label>
+        <select id="year" name="year" required>
+        	<option value="2023">2024</option>
+            <option value="2023">2023</option>
+            <option value="2022">2022</option>
+            <!-- Add more years as needed -->
+        </select><br>
+
+        <label for="month">Select Month:</label>
+        <select id="month" name="month" required>
+            <option value="1">January</option>
+            <option value="2">February</option>
+            <option value="3">March</option>
+            <option value="4">April</option>
+            <option value="5">May</option>
+            <option value="6">June</option>
+            <option value="7">July</option>
+            <option value="8">August</option>
+            <option value="9">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+        </select><br>
+
+        <input type="submit" value="Filter Posts">
+    </form>
+    <div class="container mt-4">
+    <div class="row">
+        <div class="col"><h1 class="text-center">My Posts</h1></div>
+        <div class="col-auto">	
+	         <a class="btn btn-secondary" th:href="@{/category}">
+	          Back
+	           </a>
+          </div>
+        </div>
+        <!-- Loop through posts -->
+        <div th:each="currentPost: ${posts}" class="card mb-3">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <h2 th:text="${currentPost.title}" class="card-title"></h2>
+                    </div>
+                    <div class="col-auto">
+                    <i><a th:text="${'STATUS : '+currentPost.status+' '}" class="col-auto [(${currentPost.status} == 'APPROVED') ? 'approved' : (${currentPost.status} == 'DECLINED') ? 'declined' : 'pending']"></a></i>
+                
+                        <a class="btn btn-success" th:href="@{/post/{id}(id=${currentPost.id})}">
+                            <i class="fa fa-eye"></i> View
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                <p th:text="${currentPost.content}" class="card-text"></p>
+                </div>
+                <hr>
+                <!-- Attachments -->
+                <!-- <ul class="list-group">
+                    <li th:each="attachment : ${currentPost.attachments}" class="list-group-item">
+                        <a th:href="@{/files/{file}(file=${attachment.filename})}" th:text="${attachment.filename}"></a>
+                    </li>
+                </ul> -->
+                <div class="row" th:if="${currentPost.image64 != null}">
+        		<img th:src="'data:image/jpeg;base64,' + ${currentPost.image64}" style="max-width: 300px;" /> 
+        		</div>
+                <hr>
+                 <!--COMMENTS BUTTON-->
+            	<div class="row">
+            		<div class="col">
+                    </div>
+                    <div class="col-auto">
+	                	<button class="btn btn-outline-primary" type="button" data-toggle="collapse" th:data-target="${'#collapse'+currentPost.id}"
+	 					aria-expanded="false"><span th:text="${#lists.size(currentPost.comments) + ' '}"></span>comments
+	                </button>
+           		 	</div>
+           		</div>
+	            <!--COMMENTS FORM-->
+	            <div class="collapse" th:id="${'collapse'+currentPost.id}">
+	                <form class="p-2" method="POST" action="" th:action="@{/add_comment}" th:object="${comments}" enctype='multipart/form-data'>
+	               	<textarea class="form-control" placeholder="Write a comment"  field="*{comments.comment_content}"></textarea>
+	               	<input type="hidden" th:value="${currentPost.id}" th:attr="name='id_post'"/>
+	               	<div class="row">
+            		<div class="col">
+                    </div>
+                    <div class="col-auto">
+	                        <button class="btn btn-secondary mt-3" style="right: 0;" type="submit">
+	                            Comment
+	                        </button>
+	                        </div>
+	                    </div>
+	   
+	                 </form>
+	                 
+	                 <!--POST'S COMMENTS-->
+                <div th:each="comment : ${currentPost.comments}" >
+                    <div class="card card-body m-2 p-2">
+                        <p th:text="${comment.comment_content}"></p>
+                    </div>
+                </div>
+	             </div>         
+    	  </div>
+     </div>
+   </div>
+    <!-- Bootstrap JS and jQuery (required for Bootstrap components) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+</body>
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+    <li th:if="${currentPage != 0}" class="page-item">
+      <a th:href="@{'/mylibraryposts/'+${currentPage-1}} "class="page-link" href="#" tabindex="-1">Previous</a>
+    </li>
+    <li th:classappend="${currentPage==i-1?'active':''}" th:each="i : ${#numbers.sequence(1,totalPages)}" class="page-item"><a th:href="@{'/mylibraryposts/'+${i-1}} " class="page-link" href="#"><span th:text="${i}"></span></a></li>
+ 
+    <li th:if="${currentPage+1 != totalPages}" class="page-item">
+      <a th:href="@{'/mylibraryposts/'+${currentPage+1}} " class="page-link" href="#">Next</a>
+    </li>
+  </ul>
+</nav>
+</html>

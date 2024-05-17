@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>View-Post</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+        
+    <link rel="stylesheet" th:href="@{/styles.css}" />
+    <link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://fonts.googleapis.com/css?family=Aleo|Slabo+27px"
+	rel="stylesheet">
+    <style>
+        .post-title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .btn-container .btn {
+            margin-right: 10px;
+        }
+
+        .content {
+            margin-top: 20px;
+        }
+
+        .attachments {
+            margin-top: 20px;
+        }
+
+        .attachments a {
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        .comments {
+            margin-top: 20px;
+        }
+
+        .modal-dialog {
+            max-width: 400px;
+        }
+        .icon {
+	padding: 8px;
+	color: white;
+	min-width: 35px;
+	height: 35px;
+	text-align: center;
+}
+		
+    </style>
+</head>
+
+<body>
+
+    <div class="container bg-light mt-3 p-3 px-4 rounded">
+    <div class="row">
+        <div class="col" th:text="${post.title}"></div>
+        <div class="col-auto">
+            <!-- BACK BUTTON -->
+            <a class="btn btn-success" th:href="@{/category}">
+                Back
+            </a>
+           </div>
+         <div th:if="${disableForm}" class="col-auto disabled">
+            <!-- EDIT BUTTON -->
+            <!-- <a class="btn btn-warning" style="color: white;"
+                th:href="@{/post/edit/{id}(id=${post.id})}"  onclick="return false;">
+          
+            </a> -->
+		 </div> 
+		<div th:unless="${disableForm}" class="col-auto">
+            <!-- EDIT BUTTON -->
+            <a class="btn btn-warning" style="color: white;"
+                th:href="@{/post/edit/{id}(id=${post.id})}">
+                Edit
+            </a>
+		 </div>
+		  <div th:if="${disableForm}" class="col-auto disabled">
+            <!-- DELETE BUTTON -->
+            <!-- <a class="btn btn-danger" style="color: white;" data-toggle="modal" data-target="#myModel"
+                role="button" aria-pressed="true" onclick="return false;" >
+                
+            </a> -->
+        </div>
+		 <div th:unless="${disableForm}" class="col-auto">
+            <!-- DELETE BUTTON -->
+            <a class="btn btn-danger" style="color: white;" data-toggle="modal" data-target="#myModel"
+                role="button" aria-pressed="true">
+                Delete
+            </a>
+        </div>
+</div>
+        <!-- POST CONTENT -->
+        <div class="content">
+            <p th:utext="${post.post_content}"></p>
+        </div>
+
+        <!-- ATTACHMENTS -->
+        <div class="row" th:if="${post.image64 != null}">
+        		<img th:src="'data:image/jpeg;base64,' + ${post.image64}" style="max-width: 300px;" /> 
+         </div>
+                
+       
+
+        <hr>
+
+        
+    </div>
+    <div class= "container bg-light mt-4 p-5 px-4 rounded" >
+ <div class="content">
+        	<textarea type="text" class="input" cols="102" rows="6" placeholder="Write a comment" ></textarea>
+          
+<!--           <button style='font-size:15px; color:white; border:none' class= "btn btn-secondary ">Edit </button> -->
+          <div class="row">
+          <div th:if="${disableForm}" class="col-auto disabled">	
+	         <a class="btn btn-warning" th:href="@{/category}" onclick="return false;">
+	           </a>
+          </div>
+          <div th:unless="${disableForm}" class="col-auto">	
+	         <a class="btn btn-warning" th:href="@{/category}">
+	          Edit
+	           </a>
+          </div>
+          
+<!--           <button style='font-size:15px; color:white; border:none' class= "btn btn-danger ">Delete </button> -->
+          <div th:if="${disableForm}" class="col-auto disabled">	
+	         <a class="btn btn-danger" th:href="@{/category}" onclick="return false;">
+	           </a>
+          </div>
+          <div th:unless="${disableForm}" class="col-auto">	
+	         <a class="btn btn-danger" th:href="@{/category}">
+	          Delete
+	           </a>
+          </div>
+          <div class="col-auto">	
+	         <a class="btn btn-success" th:href="@{/category}" >
+	          Add Comment
+	           </a>
+          </div>
+<!--          <button style='font-size:15px; color:white; border:none' class='btn btn-success' type="submit">Add Comment</button>-->
+          <button style='font-size:15px; color:white; border:none; height:35px; text-align:center' class= "btn btn-info">Reply <i class="fa fa-reply icon"></i></button>
+          
+          </div>
+        </div>
+        </div>
+    <!-- DELETE MODAL -->
+    <div class="modal fade" id="myModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete post</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">Are you sure you want to delete this post?</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
+                    <a th:href="@{/post/delete/{id}/{category}(id=${post.id},category=${post.category})}" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

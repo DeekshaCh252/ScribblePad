@@ -1,0 +1,114 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"><head>
+<meta charset="ISO-8859-1">
+<title>Home</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" th:href="@{/css/catStyle.css}">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<style type="text/css">.banner{background-image:null}</style>
+<title>ScribblePad</title>
+ <style>
+    .btn.btn-success {
+        /* Add your styling here */
+        background-color: #28a745; /* Change the background color */
+        color: #fff; /* Change the text color */
+        border: 1px solid #28a745; /* Add a border with the same color as the background */
+        padding: 5px 10px; /* Adjust padding to increase button size */
+        border-radius: 5px; /* Add rounded corners */
+        text-decoration: none; /* Remove underlines */
+        display: inline-block; /* Make it a block-level element */
+        cursor: pointer; /* Show a pointer cursor on hover */
+        text-align:center;
+        
+     /* Change the background color on hover */
+    }
+</style> 
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary text-camelcase">
+		<a class="navbar-brand" href="#">ScribblePad</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span></button>
+			<div class="collapse nav-links navbar-collapse justify-content-start" id="navbarSupportedContent">
+			<ul class="nav-links navbar-nav mr-auto text-uppercase justify-content-start">
+				<li class="nav-links nav-item active justify-content-start"><div class="home-hover"><a style="width: 250px;" class=" home-btn nav-links navbar-fix mx-auto justify-content-start" th:href="@{/admin}" href="#" type="button">Posts to Review
+						<span class="sr-only">(current)</span>
+				</a></div></li>
+				<li class="nav-links nav-item active justify-content-start"><div class="home-hover"><a style="width: 250px;" class=" home-btn nav-links navbar-fix mx-auto justify-content-start" href="#" type="button">Declined Posts
+						<span class="sr-only">(current)</span>
+				</a></div></li> 
+				 </ul></div>
+		
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-list-4" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  
+  <div class="nav-links justify-content-end" id="navbar-list-4">
+    <ul class="navbar-nav mr-auto justify-content-end">
+    
+   
+    
+    <li class="material-icons-outlined nav-item dropdown"> 
+           <a class="nav-link dropdown-toggle justify-content-end" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          <img src="src/main/resources/static/img/notification.jpg" width="40" height="40" class="rounded-circle">
+          
+        </a>
+        <div class="dropdown-content" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="#">Notification1</a>
+          <a class="dropdown-item" href="#">Notification2</a>
+        </div>
+        </li>
+        <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle justify-content-end" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/fox.jpg" width="40" height="40" class="rounded-circle">
+        </a>
+        
+        <div class="dropdown-content" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" style="font-size:12px ; " th:href="@{/ChangePassword}">Edit Password</a>
+          <a class="dropdown-item" style="font-size:12px; " th:href="@{/}"><i class="fa fa-sign-out icon" style="font-size:12px;color:white"></i>Log Out</a>
+        </div>
+      </li>   
+    </ul>
+  </div>
+		
+		
+				
+	</nav>
+	
+	<div class="container"><div class="row"><h5>Posts to review</h5>
+	</div><div>
+	<!-- <table >
+	--><table class="table table-striped table-responsive-md">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Date</th>
+      <th>Category</th>
+      <th>Title</th>
+      <th>Post Author</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:each="currentPost: ${admin}">
+    
+      <td th:text="${currentPost.id}"></td>
+    <td th:text="${currentPost.date}"></td> 
+      <td th:text="${currentPost.category}"></td>
+      <td th:text="${currentPost.title}"></td>
+    <td>  <span th:each="currentpostsAuthors:${currentPost.postsAuthors}">
+                <span th:text="${currentpostsAuthors.id_author.firstName}+' '+ ${currentpostsAuthors.id_author.lastName}"></span>
+            </span></td>
+     <td>
+        <a class="btn btn-outline-info" th:href="@{/adminView/{id}(id=${currentPost.id})}">View</a>
+    </td>
+     
+    </tr>
+  </tbody>
+</table></div>
+	</div>
+	
+	
+
+</body></html>
