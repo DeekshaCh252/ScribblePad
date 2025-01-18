@@ -23,5 +23,5 @@ It is a blog writing web application designed for our university community.
 
 Feel free to reach out for any questions or feedback:
 
-- **Email**: [deekshach252@gmail.com](mailto:deekshach246@gmail.com)
+- **Email**: [deekshach246@gmail.com](mailto:deekshach246@gmail.com)
 - **LinkedIn**: [Deeksha CH](https://www.linkedin.com/in/deeksha-ch-696a5712a/)
